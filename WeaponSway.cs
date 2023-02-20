@@ -12,67 +12,70 @@ using UnityEngine;
 /// </summary>
 
 
-public class WeaponSway : MonoBehaviour
+namespace JDTechnology
 {
-    [Header("Sway movement settings")]
-    [Tooltip("This is how hard the intial response is to a turn. Turn this down for heavier weapons.")]
-    [SerializeField]
-    private float initialSwingSpeed = 10;
-    public float InitialSwingSpeed
+    public class WeaponSway : MonoBehaviour
     {
-        get { return initialSwingSpeed; }
-        set { initialSwingSpeed = value; }
-    }
+        [Header("Sway movement settings")]
+        [Tooltip("This is how hard the intial response is to a turn. Turn this down for heavier weapons.")]
+        [SerializeField]
+        private float initialSwingSpeed = 10;
+        public float InitialSwingSpeed
+        {
+            get { return initialSwingSpeed; }
+            set { initialSwingSpeed = value; }
+        }
 
 
-    [Tooltip("This is the up and down/left and right tilt amount.")]
-    [SerializeField]
-    private float linearSwayAmount = 20;
-    public float LinearSwayAmount
-    {
-        get { return linearSwayAmount; }
-        set { linearSwayAmount = value; }
-    }
+        [Tooltip("This is the up and down/left and right tilt amount.")]
+        [SerializeField]
+        private float linearSwayAmount = 20;
+        public float LinearSwayAmount
+        {
+            get { return linearSwayAmount; }
+            set { linearSwayAmount = value; }
+        }
 
 
-    [Tooltip("This is the rotational sway along the forward axis that matches left and right movement.")]
-    [SerializeField]
-    private float rotationSwayAmount = 30;
-    public float RotationSwayAmount
-    {
-        get { return rotationSwayAmount; }
-        set { rotationSwayAmount = value; }
-    }
+        [Tooltip("This is the rotational sway along the forward axis that matches left and right movement.")]
+        [SerializeField]
+        private float rotationSwayAmount = 30;
+        public float RotationSwayAmount
+        {
+            get { return rotationSwayAmount; }
+            set { rotationSwayAmount = value; }
+        }
 
 
-    [Tooltip("How fast the gun returns to zero point after being swung. Turn this down for heavier weapons.")]
-    [SerializeField]
-    private float returnSwingSpeed = 5f;
-    public float ReturnSwingSpeed
-    {
-        get { return returnSwingSpeed; }
-        set { returnSwingSpeed = value; }
-    }
+        [Tooltip("How fast the gun returns to zero point after being swung. Turn this down for heavier weapons.")]
+        [SerializeField]
+        private float returnSwingSpeed = 5f;
+        public float ReturnSwingSpeed
+        {
+            get { return returnSwingSpeed; }
+            set { returnSwingSpeed = value; }
+        }
 
 
-    private Quaternion targetRotation; //Frame to frame rotation save
+        private Quaternion targetRotation; //Frame to frame rotation save
 
 
-    void Update()
-    {
-        float mouseX = Input.GetAxis("Mouse X") * LinearSwayAmount;
-        float mouseY = Input.GetAxis("Mouse Y") * LinearSwayAmount;
-        float rotationMouseX = Input.GetAxis("Mouse X") * RotationSwayAmount;
+        void Update()
+        {
+            float mouseX = Input.GetAxis("Mouse X") * LinearSwayAmount;
+            float mouseY = Input.GetAxis("Mouse Y") * LinearSwayAmount;
+            float rotationMouseX = Input.GetAxis("Mouse X") * RotationSwayAmount;
 
-        Quaternion rotationX = Quaternion.AngleAxis(-mouseY, Vector3.right);
-        Quaternion rotationY = Quaternion.AngleAxis(mouseX, Vector3.up);
-        Quaternion rotationZ = Quaternion.AngleAxis(-rotationMouseX, Vector3.forward);
+            Quaternion rotationX = Quaternion.AngleAxis(-mouseY, Vector3.right);
+            Quaternion rotationY = Quaternion.AngleAxis(mouseX, Vector3.up);
+            Quaternion rotationZ = Quaternion.AngleAxis(-rotationMouseX, Vector3.forward);
 
-        Quaternion frameTargetRot = rotationX * rotationY * rotationZ;
+            Quaternion frameTargetRot = rotationX * rotationY * rotationZ;
 
-        targetRotation = Quaternion.Slerp(targetRotation, frameTargetRot, Time.deltaTime * ReturnSwingSpeed);
+            targetRotation = Quaternion.Slerp(targetRotation, frameTargetRot, Time.deltaTime * ReturnSwingSpeed);
 
 
-        transform.localRotation = Quaternion.Slerp(transform.localRotation, targetRotation, InitialSwingSpeed * Time.deltaTime);
+            transform.localRotation = Quaternion.Slerp(transform.localRotation, targetRotation, InitialSwingSpeed * Time.deltaTime);
+        }
     }
 }
