@@ -15,7 +15,7 @@ using UnityEngine;
 public class WeaponSway : MonoBehaviour
 {
     [Header("Sway movement settings")]
-    [Tooltip("This is how hard the intial response is to a turn. Turn this up for heavier weapons.")]
+    [Tooltip("This is how hard the intial response is to a turn. Turn this down for heavier weapons.")]
     [SerializeField]
     private float initialSwingSpeed = 10;
     public float InitialSwingSpeed
@@ -25,7 +25,7 @@ public class WeaponSway : MonoBehaviour
     }
 
 
-    [Tooltip("This is the up and down tilt amount.")]
+    [Tooltip("This is the up and down/left and right tilt amount.")]
     [SerializeField]
     private float linearSwayAmount = 20;
     public float LinearSwayAmount
@@ -35,7 +35,7 @@ public class WeaponSway : MonoBehaviour
     }
 
 
-    [Tooltip("This is the rotational sway alon the forward axis that matches left and right movement.")]
+    [Tooltip("This is the rotational sway along the forward axis that matches left and right movement.")]
     [SerializeField]
     private float rotationSwayAmount = 30;
     public float RotationSwayAmount
@@ -45,7 +45,7 @@ public class WeaponSway : MonoBehaviour
     }
 
 
-    [Tooltip("How fast the gun returns to zero point after being swung.")]
+    [Tooltip("How fast the gun returns to zero point after being swung. Turn this down for heavier weapons.")]
     [SerializeField]
     private float returnSwingSpeed = 5f;
     public float ReturnSwingSpeed
