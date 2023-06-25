@@ -97,6 +97,7 @@ namespace JDTechnology
         #region Private stores
 
         private Quaternion targetRotation; //Frame to frame rotation save
+        private Quaternion startingLocalRotation; //Local rotation on start
         private Vector3 startingLocalPosition; //Local position on start
         private float horizontalPos; //Frame to frame position save
         private float verticalPos; //Frame to frame position save
@@ -109,6 +110,7 @@ namespace JDTechnology
         private void Start()
         {
             startingLocalPosition = transform.localPosition;
+            startingLocalRotation = transform.localRotation;            
         }
 
         void Update()
@@ -129,7 +131,7 @@ namespace JDTechnology
             targetRotation = Quaternion.Slerp(targetRotation, frameTargetRot, Time.deltaTime * ReturnRotationSwingSpeed);
 
 
-            transform.localRotation = Quaternion.Slerp(transform.localRotation, targetRotation, InitialRotationSwingSpeed * Time.deltaTime);
+            transform.localRotation = Quaternion.Slerp(startingLocalRotation, targetRotation, InitialRotationSwingSpeed * Time.deltaTime);
         }
 
         private void ApplyMovementLerp()
